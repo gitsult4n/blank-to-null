@@ -1,0 +1,43 @@
+{
+  "name": "blank-to-null",
+  "version": "1.0.0",
+  "description": "Turn blank and undefined values into null, deeply, with zero dependencies.",
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "null",
+    "empty",
+    "blank",
+    "trim",
+    "form",
+    "dto",
+    "sanitize",
+    "zero-dependency"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gitsult4n/blank-to-null.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gitsult4n/blank-to-null/issues"
+  },
+  "homepage": "https://github.com/gitsult4n/blank-to-null#readme",
+  "license": "MIT"
+}
