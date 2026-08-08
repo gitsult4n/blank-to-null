@@ -48,8 +48,18 @@ test('arrays keep their length', () => {
 });
 
 test('deep can be disabled', () => {
-  const input = { Bio: '  ' };
-  assert.equal(blankToNull(input, { deep: false }), input);
+  const nested = { Note: '  ' };
+  const input = { Bio: '  ', nested };
+  const out = blankToNull(input, { deep: false });
+  assert.notEqual(out, input);
+  assert.equal(out.Bio, null);
+  assert.equal(out.nested, nested);
+  assert.equal(nested.Note, '  ');
+});
+
+test('deep:false still honors empty collapsing at the top level', () => {
+  assert.equal(blankToNull([], { deep: false, emptyArrayToNull: true }), null);
+  assert.equal(blankToNull({}, { deep: false, emptyObjectToNull: true }), null);
 });
 
 test('empty array and object conversion is opt-in', () => {
@@ -85,10 +95,62 @@ test('circular references terminate', () => {
   assert.equal(out.self, out);
 });
 
-test('null-prototype objects are treated as plain', () => {
+test('null-prototype objects are treated as plain and stay null-prototype', () => {
   const input = Object.create(null);
   input.Bio = '  ';
-  assert.deepEqual(blankToNull(input), { Bio: null });
+  const out = blankToNull(input);
+  assert.equal(out.Bio, null);
+  assert.equal(Object.getPrototypeOf(out), null);
+});
+
+test('an own __proto__ key stays an own data property', () => {
+  const input = JSON.parse('{"__proto__":{"admin":true},"Name":"  Ada  "}');
+  const out = blankToNull(input);
+  assert.equal(Object.getPrototypeOf(out), Object.prototype);
+  assert.equal(Object.hasOwn(out, '__proto__'), true);
+  assert.equal(out.admin, undefined);
+  assert.equal(out.Name, 'Ada');
+  assert.deepEqual(out.__proto__, { admin: true });
+});
+
+test('pruneNull keeps an own __proto__ key out of the prototype chain', () => {
+  const out = pruneNull(JSON.parse('{"__proto__":{"admin":true},"k":1}'));
+  assert.equal(Object.getPrototypeOf(out), Object.prototype);
+  assert.equal(Object.hasOwn(out, '__proto__'), true);
+  assert.equal(out.admin, undefined);
+});
+
+test('a shared empty container collapses consistently', () => {
+  const shared = [];
+  assert.deepEqual(blankToNull({ a: shared, b: shared }, { emptyArrayToNull: true }), {
+    a: null,
+    b: null,
+  });
+  const inner = {};
+  assert.deepEqual(blankToNull({ a: inner, b: inner }, { emptyObjectToNull: true }), {
+    a: null,
+    b: null,
+  });
+});
+
+test('explicitly undefined options fall back to the defaults', () => {
+  const cfg = {};
+  assert.equal(blankToNull('  ', { trim: cfg.trim }), null);
+  assert.equal(blankToNull(undefined, { undefinedToNull: cfg.undefinedToNull }), null);
+  assert.deepEqual(blankToNull({ Bio: '  ' }, { deep: cfg.deep }), { Bio: null });
+  assert.equal(isBlank('  ', { trim: cfg.trim }), true);
+});
+
+test('enumerable symbol keys are copied', () => {
+  const key = Symbol('tag');
+  const out = blankToNull({ [key]: '  x  ', Bio: '  ' });
+  assert.equal(out[key], 'x');
+  assert.equal(out.Bio, null);
+  assert.equal(isBlank({ [key]: 1 }), false);
+});
+
+test('array holes become null', () => {
+  assert.deepEqual(blankToNull([, 1]), [null, 1]);
 });
 
 test('isBlank covers the empty cases', () => {

@@ -31,10 +31,13 @@ Returns a **copy** where blank strings and `undefined` become `null`. Strings ar
 | Option | Default | Effect |
 | --- | --- | --- |
 | `trim` | `true` | Trim strings before the emptiness test, and in the output |
-| `deep` | `true` | Walk into plain objects and arrays |
+| `deep` | `true` | Walk nested plain objects and arrays. `false` converts the top level only |
 | `undefinedToNull` | `true` | Convert `undefined` to `null` |
 | `emptyArrayToNull` | `false` | Convert `[]` to `null` |
 | `emptyObjectToNull` | `false` | Convert `{}` to `null` |
+
+Passing `undefined` for an option keeps its default, so `{ trim: cfg.trim }` on an absent
+config is not an accidental opt-out.
 
 ```js
 blankToNull('   ');                          // null
@@ -42,6 +45,10 @@ blankToNull('  Bio  ');                      // 'Bio'
 blankToNull('  ', { trim: false });          // '  '
 blankToNull(undefined);                      // null
 blankToNull({ tags: [] }, { emptyArrayToNull: true }); // { tags: null }
+
+// deep: false copies the top level, leaves nested containers by reference
+blankToNull({ Bio: '  ', meta: { Note: '  ' } }, { deep: false });
+// { Bio: null, meta: { Note: '  ' } }
 ```
 
 ### `isBlank(value, options?)`
@@ -73,7 +80,22 @@ pruneNull([1, null, 2]);                    // [1, null, 2]
 - **Falsy values survive.** `0`, `false` and `NaN` are data, not blanks. This is the whole
   reason not to write `value || null`.
 - **Circular references are safe.** Cycles are preserved in the copy, not re-walked.
-- **Null-prototype objects** (`Object.create(null)`) count as plain objects.
+- **`__proto__` stays data.** A parsed body like `{"__proto__": {...}}` keeps that key as an
+  own property; the copy's prototype is never rewritten, and the key is never dropped.
+- **Null-prototype objects** (`Object.create(null)`) count as plain objects, and the copy
+  keeps the null prototype.
+- **Enumerable symbol keys are copied.** Non-enumerable properties, and extra properties
+  hung off an array, are not.
+- **Array holes become `null`**, since `undefined` is converted like any other value.
+
+## TypeScript
+
+Return types are mapped, so nothing needs a cast:
+
+```ts
+const dto = blankToNull({ Name: '  Ada  ', Age: 0 });
+// { Name: string | null; Age: number }
+```
 
 ## Why not just `??` or `||`
 
