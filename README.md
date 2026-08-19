@@ -1,5 +1,11 @@
 # blank-to-null
 
+[![CI](https://github.com/gitsult4n/blank-to-null/actions/workflows/ci.yml/badge.svg)](https://github.com/gitsult4n/blank-to-null/actions/workflows/ci.yml)
+[![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](https://github.com/gitsult4n/blank-to-null/blob/main/package.json)
+[![types](https://img.shields.io/badge/types-included-blue.svg)](https://github.com/gitsult4n/blank-to-null/blob/main/src/index.d.ts)
+[![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/gitsult4n/blank-to-null/blob/main/LICENSE)
+
 Turn blank and `undefined` values into `null`, deeply, with zero dependencies.
 
 HTML inputs never produce `null` — an untouched text field submits `""`. Most APIs and
@@ -118,4 +124,4 @@ const dto = blankToNull(req.body);
 
 ## License
 
-MIT
+MIT © [gitsult4n](https://github.com/gitsult4n)
