@@ -406,13 +406,14 @@ npm run test:package # package resolution check (attw)
 npm run test:all   # all three
 ```
 
-The runtime lives in `src/index.js` (CommonJS); `src/index.mjs` is a thin ESM wrapper
-and `src/index.cjs` a one-line shim for the old path. The runtime deliberately avoids the
-`.cjs` extension: create-react-app 5 routes any imported `.cjs` through its catch-all
-asset rule and hands back a URL string instead of the module. Type declarations are
-`src/types.d.ts` (shared) plus `src/index.d.mts` and `src/index.d.ts` (entry points). Type assertions live in `test-d/assert.mts`; the CommonJS variant is
-generated from it by `test-d/gen-cts.mjs`, so the two can never drift — **edit the `.mts`
-file only.**
+The runtime lives in `src/index.js` (CommonJS) and `src/index.mjs` is a thin ESM
+wrapper. No file in the package uses the `.cjs` extension, deliberately:
+create-react-app 5 routes any imported `.cjs` through its catch-all asset rule and
+hands back a URL string instead of the module, so the default export stops being a
+function while the build still succeeds. Type declarations are `src/types.d.ts`
+(shared) plus `src/index.d.mts` and `src/index.d.ts` (entry points). Type assertions
+live in `test-d/assert.mts`; the CommonJS variant is generated from it by
+`test-d/gen-cts.mjs`, so the two can never drift — **edit the `.mts` file only.**
 
 Issues and pull requests: <https://github.com/gitsult4n/blank-to-null>
 

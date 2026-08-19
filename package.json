@@ -15,6 +15,10 @@
       "require": {
         "types": "./src/index.d.ts",
         "default": "./src/index.js"
+      },
+      "default": {
+        "types": "./src/index.d.ts",
+        "default": "./src/index.js"
       }
     },
     "./package.json": "./package.json"

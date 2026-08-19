@@ -39,4 +39,11 @@ test('no reachable runtime entry is a .cjs file', () => {
 
   const esm = fs.readFileSync(path.join(__dirname, '..', 'src', 'index.mjs'), 'utf8');
   assert.ok(!/\.cjs['"]/.test(esm), 'src/index.mjs must not import a .cjs file');
+
+  const shipped = fs.readdirSync(path.join(__dirname, '..', 'src'));
+  assert.deepEqual(
+    shipped.filter((file) => file.endsWith('.cjs')),
+    [],
+    'src/ must not contain a .cjs file at all',
+  );
 });
