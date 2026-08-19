@@ -4,7 +4,7 @@
 [![downloads](https://img.shields.io/npm/dm/blank-to-null.svg)](https://www.npmjs.com/package/blank-to-null)
 [![CI](https://github.com/gitsult4n/blank-to-null/actions/workflows/ci.yml/badge.svg)](https://github.com/gitsult4n/blank-to-null/actions/workflows/ci.yml)
 [![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](https://github.com/gitsult4n/blank-to-null/blob/main/package.json)
-[![types](https://img.shields.io/badge/types-included-blue.svg)](https://github.com/gitsult4n/blank-to-null/blob/main/src/index.d.ts)
+[![types](https://img.shields.io/badge/types-included-blue.svg)](https://github.com/gitsult4n/blank-to-null/blob/main/src/types.d.ts)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/gitsult4n/blank-to-null/blob/main/LICENSE)
 
@@ -103,11 +103,24 @@ pruneNull([1, null, 2]);                    // [1, null, 2]
 
 ## TypeScript
 
+Types ship with the package, with separate declarations for the ESM and CommonJS
+entry points, so `import` and `require` both resolve under `node16`/`nodenext`.
+
 Return types are mapped, so nothing needs a cast:
 
 ```ts
 const dto = blankToNull({ Name: '  Ada  ', Age: 0 });
 // { Name: string | null; Age: number }
+```
+
+`null` is only added where the value can actually be blank, so literal types keep
+their precision:
+
+```ts
+type A = Blanked<string>;      // string | null
+type B = Blanked<'ada'>;       // 'ada'        — never blank, so never null
+type C = Blanked<''>;          // null         — always blank
+type D = Blanked<'  '>;        // '  ' | null  — blank unless `trim` is off
 ```
 
 ## Why not just `??` or `||`
