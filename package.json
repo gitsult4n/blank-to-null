@@ -1,16 +1,17 @@
 {
   "name": "blank-to-null",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Turn blank and undefined values into null, deeply, with zero dependencies.",
-  "type": "module",
   "author": "gitsult4n (https://github.com/gitsult4n)",
   "sideEffects": false,
-  "main": "./src/index.js",
+  "main": "./src/index.cjs",
   "types": "./src/index.d.ts",
   "exports": {
     ".": {
       "types": "./src/index.d.ts",
-      "default": "./src/index.js"
+      "import": "./src/index.mjs",
+      "require": "./src/index.cjs",
+      "default": "./src/index.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -33,6 +34,7 @@
     "sanitize",
     "zero-dependency",
     "esm",
+    "commonjs",
     "typescript",
     "undefined"
   ],

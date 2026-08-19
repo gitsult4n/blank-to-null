@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import blankToNull, { isBlank, pruneNull } from '../src/index.js';
+import blankToNull, { isBlank, pruneNull } from '../src/index.mjs';
 
 test('blank strings become null', () => {
   assert.equal(blankToNull(''), null);

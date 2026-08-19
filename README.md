@@ -28,7 +28,12 @@ blankToNull({ Name: '  Ada ', Bio: '   ', Age: 0, Tags: ['', 'js'] });
 npm install blank-to-null
 ```
 
-Node 18+. ESM. No dependencies.
+Node 18+. No dependencies. ESM and CommonJS both work:
+
+```js
+import blankToNull, { isBlank, pruneNull } from 'blank-to-null'; // ESM
+const blankToNull = require('blank-to-null');                    // CommonJS
+```
 
 ## API
 

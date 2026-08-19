@@ -49,7 +49,7 @@ function resolve(options) {
   };
 }
 
-export function isBlank(value, options = {}) {
+function isBlank(value, options = {}) {
   const trim = options.trim ?? DEFAULTS.trim;
   if (value === null || value === undefined) return true;
   if (typeof value === 'string') return (trim ? value.trim() : value) === '';
@@ -58,7 +58,7 @@ export function isBlank(value, options = {}) {
   return false;
 }
 
-export function blankToNull(input, options = {}) {
+function blankToNull(input, options = {}) {
   return convert(input, resolve(options), new WeakMap(), 0);
 }
 
@@ -103,7 +103,7 @@ function convert(value, opts, seen, depth) {
   return out;
 }
 
-export function pruneNull(input) {
+function pruneNull(input) {
   return prune(input, new WeakMap());
 }
 
@@ -129,4 +129,8 @@ function prune(value, seen) {
   return out;
 }
 
-export default blankToNull;
+module.exports = blankToNull;
+module.exports.default = blankToNull;
+module.exports.blankToNull = blankToNull;
+module.exports.isBlank = isBlank;
+module.exports.pruneNull = pruneNull;
