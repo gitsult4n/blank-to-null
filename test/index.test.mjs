@@ -141,6 +141,13 @@ test('explicitly undefined options fall back to the defaults', () => {
   assert.equal(isBlank('  ', { trim: cfg.trim }), true);
 });
 
+test('a null options argument behaves like an omitted one', () => {
+  assert.equal(blankToNull('  ', null), null);
+  assert.equal(blankToNull('  Bio  ', null), 'Bio');
+  assert.deepEqual(blankToNull({ Bio: '  ' }, null), { Bio: null });
+  assert.equal(isBlank('  ', null), true);
+});
+
 test('enumerable symbol keys are copied', () => {
   const key = Symbol('tag');
   const out = blankToNull({ [key]: '  x  ', Bio: '  ' });

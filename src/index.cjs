@@ -41,16 +41,16 @@ function emptyLike(value) {
 
 function resolve(options) {
   return {
-    trim: options.trim ?? DEFAULTS.trim,
-    deep: options.deep ?? DEFAULTS.deep,
-    undefinedToNull: options.undefinedToNull ?? DEFAULTS.undefinedToNull,
-    emptyArrayToNull: options.emptyArrayToNull ?? DEFAULTS.emptyArrayToNull,
-    emptyObjectToNull: options.emptyObjectToNull ?? DEFAULTS.emptyObjectToNull,
+    trim: options?.trim ?? DEFAULTS.trim,
+    deep: options?.deep ?? DEFAULTS.deep,
+    undefinedToNull: options?.undefinedToNull ?? DEFAULTS.undefinedToNull,
+    emptyArrayToNull: options?.emptyArrayToNull ?? DEFAULTS.emptyArrayToNull,
+    emptyObjectToNull: options?.emptyObjectToNull ?? DEFAULTS.emptyObjectToNull,
   };
 }
 
-function isBlank(value, options = {}) {
-  const trim = options.trim ?? DEFAULTS.trim;
+function isBlank(value, options) {
+  const trim = options?.trim ?? DEFAULTS.trim;
   if (value === null || value === undefined) return true;
   if (typeof value === 'string') return (trim ? value.trim() : value) === '';
   if (Array.isArray(value)) return value.length === 0;
@@ -58,7 +58,7 @@ function isBlank(value, options = {}) {
   return false;
 }
 
-function blankToNull(input, options = {}) {
+function blankToNull(input, options) {
   return convert(input, resolve(options), new WeakMap(), 0);
 }
 
