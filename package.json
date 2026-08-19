@@ -26,7 +26,10 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "test:types": "node test-d/gen-cts.mjs && tsc -p test-d/tsconfig.json",
+    "test:package": "attw --pack .",
+    "test:all": "npm run test && npm run test:types && npm run test:package"
   },
   "keywords": [
     "null",
@@ -53,5 +56,9 @@
     "url": "https://github.com/gitsult4n/blank-to-null/issues"
   },
   "homepage": "https://github.com/gitsult4n/blank-to-null#readme",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "typescript": "^7.0.2"
+  }
 }
