@@ -13,10 +13,12 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
+      # No registry-url: setup-node would write an .npmrc with a placeholder
+      # NODE_AUTH_TOKEN, and npm authenticates with that instead of exchanging
+      # the OIDC token for trusted publishing.
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: https://registry.npmjs.org
       - run: npm install -g npm@latest
       - run: npm install --no-audit --no-fund
       - run: npm run test:all
