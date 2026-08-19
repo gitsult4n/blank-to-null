@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const blankToNull = require('../src/index.cjs');
-const { isBlank, pruneNull } = require('../src/index.cjs');
+const blankToNull = require('../src/index.js');
+const { isBlank, pruneNull } = require('../src/index.js');
 
 test('require returns the default function', () => {
   assert.equal(typeof blankToNull, 'function');

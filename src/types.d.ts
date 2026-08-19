@@ -1,6 +1,6 @@
 // Shared type definitions for both entry points. Only the four public aliases
 // (BlankToNullOptions, IsBlankOptions, Blanked, Pruned) are re-exported from
-// index.d.mts / index.d.cts; everything else here is internal and unreachable
+// index.d.mts / index.d.ts; everything else here is internal and unreachable
 // for consumers because "exports" exposes no deep paths.
 
 /** Options accepted by `blankToNull`. */
