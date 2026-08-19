@@ -1,5 +1,7 @@
 # blank-to-null
 
+[![npm](https://img.shields.io/npm/v/blank-to-null.svg)](https://www.npmjs.com/package/blank-to-null)
+[![downloads](https://img.shields.io/npm/dm/blank-to-null.svg)](https://www.npmjs.com/package/blank-to-null)
 [![CI](https://github.com/gitsult4n/blank-to-null/actions/workflows/ci.yml/badge.svg)](https://github.com/gitsult4n/blank-to-null/actions/workflows/ci.yml)
 [![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](https://github.com/gitsult4n/blank-to-null/blob/main/package.json)
 [![types](https://img.shields.io/badge/types-included-blue.svg)](https://github.com/gitsult4n/blank-to-null/blob/main/src/index.d.ts)
