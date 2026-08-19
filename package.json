@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Turn blank and undefined values into null, deeply, with zero dependencies.",
   "type": "module",
+  "author": "gitsult4n (https://github.com/gitsult4n)",
+  "sideEffects": false,
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "exports": {
@@ -29,8 +31,14 @@
     "form",
     "dto",
     "sanitize",
-    "zero-dependency"
+    "zero-dependency",
+    "esm",
+    "typescript",
+    "undefined"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gitsult4n/blank-to-null.git"
